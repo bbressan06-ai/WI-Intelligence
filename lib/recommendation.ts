@@ -56,14 +56,16 @@ export function match(
     a.some((x) => b.some((y) => y.includes(x) || x.includes(y))) ? 1 : 0,
     `uva: ${p.uva} (preferência: ${pf.uvas})`);
 
-  add(W.preco, "faixa de preço", !!pf.preco && !!unitPrice,
-    !pf.preco ? 0 : unitPrice <= pf.preco ? 1 : unitPrice <= pf.preco * 1.2 ? 0.5 : 0,
-    `preço R$ ${unitPrice}${unitPrice <= pf.preco ? " dentro" : " acima"} da faixa`);
+  const preco = pf.preco;
+  add(W.preco, "faixa de preço", !!preco && !!unitPrice,
+    !preco ? 0 : unitPrice <= preco ? 1 : unitPrice <= preco * 1.2 ? 0.5 : 0,
+    `preço R$ ${unitPrice}${preco != null && unitPrice <= preco ? " dentro" : " acima"} da faixa`);
 
   if (kind === "B2B") {
-    add(W.marg, "margem desejada", !!pf.marg && p.margem != null,
-      p.margem >= pf.marg! ? 1 : p.margem >= pf.marg! - 5 ? 0.5 : 0,
-      `margem ${p.margem}% (desejada: ${pf.marg}%)`);
+    const marg = pf.marg;
+    add(W.marg, "margem desejada", !!marg && p.margem != null,
+      marg != null && p.margem >= marg ? 1 : marg != null && p.margem >= marg - 5 ? 0.5 : 0,
+      `margem ${p.margem}% (desejada: ${marg}%)`);
     const g = tokens(pf.gastro), h = tokens(p.harm);
     add(W.harm, "harmonização", g.length > 0 && h.length > 0,
       g.some((x) => h.some((y) => y.includes(x) || x.includes(y))) ? 1 : 0,
