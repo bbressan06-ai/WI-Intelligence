@@ -1,4 +1,4 @@
-import { createServerClient } from "@supabase/ssr";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
 /** Cliente Supabase para Server Components / Server Actions (com RLS do usuário logado). */
@@ -10,7 +10,8 @@ export async function createClient() {
     {
       cookies: {
         getAll: () => cookieStore.getAll(),
-        setAll: (list) => list.forEach(({ name, value, options }) => cookieStore.set(name, value, options)),
+        setAll: (list: { name: string; value: string; options: CookieOptions }[]) =>
+          list.forEach(({ name, value, options }) => cookieStore.set(name, value, options)),
       },
     },
   );
