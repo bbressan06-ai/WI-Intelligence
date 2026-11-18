@@ -15,7 +15,9 @@ const LV: Record<string, number> = {
 };
 
 const dist = (a?: string, b?: string): number | null =>
-  LV[a] && LV[b] ? 1 - Math.min(Math.abs(LV[a] - LV[b]), 2) / 2 : null;
+  a && b && LV[a] != null && LV[b] != null
+    ? 1 - Math.min(Math.abs(LV[a] - LV[b]), 2) / 2
+    : null;
 
 const tokens = (s?: string): string[] =>
   String(s || "").toLowerCase().split(/[,;/]+/).map((y) => y.trim()).filter(Boolean);
