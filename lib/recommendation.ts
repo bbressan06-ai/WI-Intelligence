@@ -62,10 +62,10 @@ export function match(
     `preço R$ ${unitPrice}${preco != null && unitPrice <= preco ? " dentro" : " acima"} da faixa`);
 
   if (kind === "B2B") {
-    const marg = pf.marg;
-    add(W.marg, "margem desejada", !!marg && p.margem != null,
-      marg != null && p.margem >= marg ? 1 : marg != null && p.margem >= marg - 5 ? 0.5 : 0,
-      `margem ${p.margem}% (desejada: ${marg}%)`);
+    const marg = pf.marg, margem = p.margem;
+    add(W.marg, "margem desejada", !!marg && margem != null,
+      marg != null && margem != null && margem >= marg ? 1 : marg != null && margem != null && margem >= marg - 5 ? 0.5 : 0,
+      `margem ${margem}% (desejada: ${marg}%)`);
     const g = tokens(pf.gastro), h = tokens(p.harm);
     add(W.harm, "harmonização", g.length > 0 && h.length > 0,
       g.some((x) => h.some((y) => y.includes(x) || x.includes(y))) ? 1 : 0,
