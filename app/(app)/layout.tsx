@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation";
 import { createClient, getUser } from "@/lib/supabase/server";
-import { NAV } from "@/components/nav";
 
 /** Layout autenticado: valida sessão, carrega organizações do usuário e renderiza o shell. */
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
@@ -29,5 +28,3 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     </div>
   );
 }
-
-export { NAV };
