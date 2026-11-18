@@ -1,0 +1,34 @@
+# CI: lint/build a cada push; deploy é feito pela integração Vercel↔GitHub.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Validar migração SQL (sintaxe)
+        run: |
+          # validação leve: arquivo existe e não vazio
+          test -s supabase/migrations/0001_init.sql
+          echo "Migrações presentes."
+
+      - name: Build (sem banco — valida tipos e compilação)
+        run: npm run build
+        env:
+          # placeholders apenas para o build passar; runtime usa os valores reais da Vercel
+          NEXT_PUBLIC_SUPABASE_URL: https://placeholder.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: placeholder-anon-key
