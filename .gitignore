@@ -1,0 +1,19 @@
+# Dependências
+node_modules/
+.next/
+out/
+
+# Ambientes — NUNCA commitar chaves
+.env
+.env.local
+.env*.local
+
+# Supabase local
+supabase/.branches
+supabase/.temp
+
+# SO / editores
+.DS_Store
+*.log
+.vscode/
+.idea/
